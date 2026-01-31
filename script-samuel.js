@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // 1. MENÚ MÓVIL (Hamburguesa)
+    // 1. MENÚ MÓVIL
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     const menuIcon = menuToggle.querySelector('i');
@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Cerrar menú al seleccionar una opción
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
@@ -28,10 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    // NOTA: Eliminamos el código de "Smooth Scroll" de aquí porque
-    // ya lo tienes en el CSS (html { scroll-behavior: smooth; }).
-    // Esto hará que el botón "Agenda tu Cita" funcione a la primera.
 
     // 2. GESTIÓN DE CITAS Y HORARIOS
     const citaForm = document.getElementById('citaForm');
@@ -89,26 +84,17 @@ document.addEventListener('DOMContentLoaded', function() {
             .filter(c => c.barbero === barbero && c.fecha === fecha)
             .map(c => c.hora);
 
-        // Obtener día de la semana (0=Domingo, 1=Lunes...)
         const diaSemana = new Date(fecha + 'T00:00:00').getDay();
         
         let horariosDelDia = [];
 
         if (diaSemana === 0) {
-            // DOMINGO: CERRADO
             horariosDelDia = [];
         } else {
-            // LUNES A SÁBADO: 11:00 AM - 7:30 PM (La última cita inicia a las 7:00 PM o 7:30 PM según decidas)
-            // Generamos de 11 a 20 (hasta las 8pm).
             let horasBrutas = generarHoras(11, 20);
-            
-            // Si cierras 7:30, la última cita puede ser 7:00. 
-            // Si quieres aceptar citas a las 7:30, deja la lista como está.
-            // Aquí quitamos 19:30 por si acaso quieres salir temprano.
             horariosDelDia = horasBrutas.filter(h => h !== '19:30');
         }
         
-        // Filtrar ocupados
         const horariosLibres = horariosDelDia.filter(h => !horariosOcupados.includes(h));
         
         horaSelect.disabled = false;
@@ -236,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if(closeBtn) closeBtn.onclick = () => modal.style.display = 'none';
 
-    // Animaciones Scroll (Solo fade in de elementos, no afecta el click del botón)
+    // Animaciones Scroll (Solo fade in de elementos)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -245,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.servicio-card, .galeria-item, .info-card').forEach(el => {
+    document.querySelectorAll('.servicio-img-container, .galeria-item, .info-card').forEach(el => {
         el.style.opacity = '0'; el.style.transform = 'translateY(30px)'; el.style.transition = 'all 0.6s ease-out';
         observer.observe(el);
     });
@@ -254,4 +240,3 @@ document.addEventListener('DOMContentLoaded', function() {
     const telInput = document.getElementById('telefono');
     if(telInput) telInput.addEventListener('input', function(e) { this.value = this.value.replace(/[^0-9]/g, ''); });
 });
-
