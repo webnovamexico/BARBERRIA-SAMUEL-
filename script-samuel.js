@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // 1. MENÚ MÓVIL
+    // 1. MENÚ MÓVIL (Hamburguesa)
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     const menuIcon = menuToggle.querySelector('i');
@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Cerrar menú al seleccionar una opción
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
@@ -27,6 +28,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // NOTA: Eliminamos el código de "Smooth Scroll" de aquí porque
+    // ya lo tienes en el CSS (html { scroll-behavior: smooth; }).
+    // Esto hará que el botón "Agenda tu Cita" funcione a la primera.
 
     // 2. GESTIÓN DE CITAS Y HORARIOS
     const citaForm = document.getElementById('citaForm');
@@ -51,10 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
             horas.push(`${i}:00`);
             horas.push(`${i}:30`);
         }
-        // Agregamos la hora exacta de fin si es necesario, 
-        // pero aquí 'fin' funciona como límite.
-        // Si queremos incluir las 7:00 PM (19:00), el bucle llega hasta 19 y pone 19:00 y 19:30.
-        // Filtraremos después si es necesario.
         return horas;
     }
 
@@ -95,15 +96,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (diaSemana === 0) {
             // DOMINGO: CERRADO
-            // No generamos horas.
             horariosDelDia = [];
         } else {
-            // LUNES A SÁBADO: 11:00 AM - 7:29 PM
-            // Generamos de 11 a 20. Esto crea: 11:00...19:00, 19:30.
-            // Filtraremos las 19:30 para que la última cita sea a las 7:00 PM.
+            // LUNES A SÁBADO: 11:00 AM - 7:30 PM (La última cita inicia a las 7:00 PM o 7:30 PM según decidas)
+            // Generamos de 11 a 20 (hasta las 8pm).
             let horasBrutas = generarHoras(11, 20);
             
-            // Eliminamos 19:30 para respetar el cierre a las 7:29/7:30
+            // Si cierras 7:30, la última cita puede ser 7:00. 
+            // Si quieres aceptar citas a las 7:30, deja la lista como está.
+            // Aquí quitamos 19:30 por si acaso quieres salir temprano.
             horariosDelDia = horasBrutas.filter(h => h !== '19:30');
         }
         
@@ -112,7 +113,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         horaSelect.disabled = false;
         
-        // Mensajes según disponibilidad o si está cerrado
         if (diaSemana === 0) {
             horaSelect.innerHTML = '<option value="">⛔ CERRADO LOS DOMINGOS</option>';
             horaSelect.disabled = true;
@@ -162,7 +162,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 mostrarToast('El teléfono debe tener 10 dígitos', 'error'); return;
             }
 
-            // Validación extra por si acaso alguien inspecciona elemento y habilita el domingo
             const diaSemana = new Date(formData.fecha + 'T00:00:00').getDay();
             if (diaSemana === 0) {
                 mostrarToast('Lo sentimos, los domingos estamos cerrados.', 'error');
@@ -237,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if(closeBtn) closeBtn.onclick = () => modal.style.display = 'none';
 
-    // Animaciones Scroll
+    // Animaciones Scroll (Solo fade in de elementos, no afecta el click del botón)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -255,3 +254,4 @@ document.addEventListener('DOMContentLoaded', function() {
     const telInput = document.getElementById('telefono');
     if(telInput) telInput.addEventListener('input', function(e) { this.value = this.value.replace(/[^0-9]/g, ''); });
 });
+
