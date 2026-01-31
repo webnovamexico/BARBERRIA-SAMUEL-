@@ -126,7 +126,7 @@ header {
     color: var(--primary-color);
 }
 
-/* --- HERO SECTION (CORREGIDA LA POSICIÓN) --- */
+/* --- HERO SECTION --- */
 .hero {
     position: relative;
     height: 100vh;
@@ -184,7 +184,7 @@ header {
 
 .hero-content {
     position: relative;
-    z-index: 3; /* Capa frontal: ESTO HACE QUE EL BOTÓN FUNCIONE */
+    z-index: 3; /* Capa frontal */
     padding: 20px;
     max-width: 800px;
 }
@@ -215,9 +215,9 @@ header {
     border: 2px solid var(--primary-color);
     transition: 0.3s;
     animation: fadeInUp 1.4s ease-out;
-    cursor: pointer; /* Fuerza el cursor de mano */
+    cursor: pointer;
     position: relative;
-    z-index: 10; /* Asegura máxima prioridad al clic */
+    z-index: 10;
 }
 
 .btn-primary:hover {
@@ -225,7 +225,7 @@ header {
     color: var(--primary-color);
 }
 
-/* --- SERVICIOS --- */
+/* --- NUEVOS ESTILOS PARA SERVICIOS VERTICALES --- */
 .section-title {
     text-align: center;
     font-family: var(--font-heading);
@@ -242,68 +242,59 @@ header {
 }
 
 .servicios {
-    padding: 100px 0;
+    padding: 80px 0;
     background-color: var(--secondary-color);
 }
 
-.servicios-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+/* Contenedor principal de la lista vertical */
+.servicios-lista-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra todo horizontalmente */
+    gap: 60px; /* Espacio grande entre cada servicio */
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.servicio-card {
-    background: var(--dark-grey);
-    padding: 40px 30px;
+/* Cada bloque de servicio (Título + Imagen) */
+.servicio-item-vertical {
+    width: 100%;
     text-align: center;
-    border: 1px solid #333;
-    transition: 0.3s;
-    position: relative;
-    overflow: hidden;
 }
 
-.servicio-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--primary-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.servicio-card.destacado {
-    border: 1px solid var(--primary-color);
-    background: linear-gradient(145deg, var(--dark-grey), #3a3225);
-}
-
-.badge-popular {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: var(--primary-color);
-    color: #000;
-    font-size: 0.7rem;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 20px;
-    text-transform: uppercase;
-}
-
-.servicio-icon {
-    font-size: 3rem;
+.servicio-item-vertical h3 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
     color: var(--primary-color);
     margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.servicio-card h3 {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    font-family: var(--font-heading);
+/* Contenedor de la imagen de ejemplo */
+.servicio-img-container {
+    width: 100%;
+    height: 350px; /* Altura fija para uniformidad */
+    overflow: hidden;
+    border-radius: 12px; /* Bordes redondeados elegantes */
+    border: 3px solid var(--primary-color); /* Marco dorado */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5); /* Sombra profunda */
 }
 
-.servicio-card p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
+.servicio-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* La imagen llena el cuadro sin deformarse */
+    transition: transform 0.5s ease;
 }
 
-/* --- GALERÍA --- */
+/* Efecto al pasar el mouse sobre la imagen */
+.servicio-img-container:hover img {
+    transform: scale(1.05); /* Zoom suave */
+}
+
+
+/* --- GALERÍA (Se mantiene para el final) --- */
 .galeria {
     padding: 100px 0;
     background-color: #111;
@@ -317,7 +308,7 @@ header {
 
 .galeria-item {
     position: relative;
-    height: 300px;
+    height: 250px; /* Un poco más chicas que las principales */
     overflow: hidden;
     cursor: pointer;
 }
@@ -327,10 +318,12 @@ header {
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
+    filter: grayscale(30%);
 }
 
 .galeria-item:hover img {
     transform: scale(1.1);
+    filter: grayscale(0%);
 }
 
 .galeria-overlay {
@@ -346,6 +339,7 @@ header {
     align-items: center;
     opacity: 0;
     transition: 0.3s;
+    border: 1px solid var(--primary-color);
 }
 
 .galeria-item:hover .galeria-overlay {
@@ -355,25 +349,10 @@ header {
 .galeria-overlay h4 {
     color: var(--primary-color);
     font-family: var(--font-heading);
-    font-size: 1.5rem;
-    margin-bottom: 5px;
-    transform: translateY(20px);
-    transition: 0.4s;
+    font-size: 1.2rem;
+    text-transform: uppercase;
 }
 
-.galeria-item:hover .galeria-overlay h4 {
-    transform: translateY(0);
-}
-
-.galeria-overlay p {
-    font-size: 0.9rem;
-    transform: translateY(20px);
-    transition: 0.4s 0.1s;
-}
-
-.galeria-item:hover .galeria-overlay p {
-    transform: translateY(0);
-}
 
 /* --- CITAS SECTION --- */
 .citas {
@@ -707,6 +686,11 @@ input:focus, select:focus, textarea:focus {
 
     .hero-title {
         font-size: 2.5rem;
+    }
+
+    /* Ajuste para las imágenes de servicios en móvil */
+    .servicio-img-container {
+        height: 250px; /* Un poco menos altas en celular */
     }
 
     .cita-container {
