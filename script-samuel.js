@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 1. MENÚ MÓVIL
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
-    const menuIcon = menuToggle.querySelector('i');
+    const menuIcon = menuToggle ? menuToggle.querySelector('i') : null;
 
     if(menuToggle) {
         menuToggle.addEventListener('click', () => {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 2. GESTIÓN DE CITAS Y HORARIOS
+    // 2. GESTIÓN DE CITAS
     const citaForm = document.getElementById('citaForm');
     const modal = document.getElementById('modalConfirmacion');
     const closeBtn = document.querySelector('.close');
@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
         fechaInput.setAttribute('min', hoy);
     }
 
-    // --- CONFIGURACIÓN DE HORARIOS ---
     function generarHoras(inicio, fin) {
         let horas = [];
         for (let i = inicio; i < fin; i++) {
@@ -68,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return !citas.some(c => c.barbero === barbero && c.fecha === fecha && c.hora === hora);
     }
 
-    // --- LÓGICA PRINCIPAL DE HORARIOS ---
     function actualizarHorarios() {
         if(!barberoSelect || !fechaInput) return;
         if (!barberoSelect.value || !fechaInput.value) {
@@ -85,12 +83,12 @@ document.addEventListener('DOMContentLoaded', function() {
             .map(c => c.hora);
 
         const diaSemana = new Date(fecha + 'T00:00:00').getDay();
-        
         let horariosDelDia = [];
 
-        if (diaSemana === 0) {
+        if (diaSemana === 0) { // Domingo
             horariosDelDia = [];
         } else {
+            // LUN-SAB: 11 a 8 PM
             let horasBrutas = generarHoras(11, 20);
             horariosDelDia = horasBrutas.filter(h => h !== '19:30');
         }
@@ -100,10 +98,10 @@ document.addEventListener('DOMContentLoaded', function() {
         horaSelect.disabled = false;
         
         if (diaSemana === 0) {
-            horaSelect.innerHTML = '<option value="">⛔ CERRADO LOS DOMINGOS</option>';
+            horaSelect.innerHTML = '<option value="">⛔ HOY DESCANSAMOS</option>';
             horaSelect.disabled = true;
         } else if (horariosLibres.length === 0) {
-            horaSelect.innerHTML = '<option value="">Agenda llena este día</option>';
+            horaSelect.innerHTML = '<option value="">Agenda llena</option>';
             horaSelect.disabled = true;
         } else {
             horaSelect.innerHTML = '<option value="">Selecciona hora</option>';
@@ -129,7 +127,6 @@ document.addEventListener('DOMContentLoaded', function() {
         fechaInput.addEventListener('change', actualizarHorarios);
     }
 
-    // 3. ENVÍO FORMULARIO
     if(citaForm) {
         citaForm.addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -145,17 +142,17 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             if (formData.telefono.length < 10) {
-                mostrarToast('El teléfono debe tener 10 dígitos', 'error'); return;
+                mostrarToast('El cel debe tener 10 dígitos', 'error'); return;
             }
 
             const diaSemana = new Date(formData.fecha + 'T00:00:00').getDay();
             if (diaSemana === 0) {
-                mostrarToast('Lo sentimos, los domingos estamos cerrados.', 'error');
+                mostrarToast('Los domingos no abrimos, carnal.', 'error');
                 return;
             }
             
             if (!verificarDisponibilidad(formData.barbero, formData.fecha, formData.hora)) {
-                mostrarToast('Ese horario ya fue ocupado, intenta otro.', 'error');
+                mostrarToast('Te ganaron la hora, elige otra.', 'error');
                 actualizarHorarios();
                 return;
             }
@@ -168,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 guardarCita(formData);
                 mostrarModalConfirmacion(formData);
-                mostrarToast('¡Cita apartada! Abriendo WhatsApp...', 'success');
+                mostrarToast('¡Listo! Abriendo WhatsApp...', 'success');
                 
                 setTimeout(() => {
                     const mensaje = crearMensajeWA(formData);
@@ -184,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 2000);
                 
             } catch (error) {
-                mostrarToast('Error al procesar.', 'error');
+                mostrarToast('Error en el sistema.', 'error');
                 btnSubmit.disabled = false;
             }
         });
@@ -192,17 +189,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function crearMensajeWA(data) {
         const fechaLegible = new Date(data.fecha + 'T00:00:00').toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' });
-        return `💈 *NUEVA CITA - BARBERÍA SAMUEL* 💈\n\n` +
+        return `💈 *NUEVA CITA - SAMUEL BARBER* 💈\n\n` +
                `👤 Cliente: *${data.nombre}*\n` +
                `📱 Tel: ${data.telefono}\n\n` +
                `🔥 *Servicio:* ${data.servicio}\n` +
                `✂️ *Barbero:* ${data.barbero}\n` +
                `📅 *Fecha:* ${fechaLegible}\n` +
                `⏰ *Hora:* ${formatearHora(data.hora)}\n\n` +
-               `📝 *Notas:* ${data.notas || 'N/A'}`;
+               `📝 *Notas:* ${data.notas || 'Sin notas'}`;
     }
 
-    // 4. UTILIDADES UI
     function mostrarToast(mensaje, tipo = 'success') {
         const container = document.getElementById('toast-container');
         if(!container) return;
@@ -217,12 +213,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function mostrarModalConfirmacion(data) {
-        mensajeConfirmacion.innerHTML = `Jefe <strong>${data.nombre}</strong>, tu lugar está apartado.<br>Confirma los detalles en el chat con ${data.barbero}.`;
+        mensajeConfirmacion.innerHTML = `Que onda <strong>${data.nombre}</strong>, ya quedó apartado.<br>Confirma los detalles en el chat.`;
         modal.style.display = 'block';
     }
     if(closeBtn) closeBtn.onclick = () => modal.style.display = 'none';
 
-    // Animaciones Scroll (Solo fade in de elementos)
+    // Animaciones
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -231,12 +227,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.servicio-img-container, .galeria-item, .info-card').forEach(el => {
+    document.querySelectorAll('.servicio-card, .galeria-item, .info-card').forEach(el => {
         el.style.opacity = '0'; el.style.transform = 'translateY(30px)'; el.style.transition = 'all 0.6s ease-out';
         observer.observe(el);
     });
     
-    // Solo números
+    // Solo números en teléfono
     const telInput = document.getElementById('telefono');
     if(telInput) telInput.addEventListener('input', function(e) { this.value = this.value.replace(/[^0-9]/g, ''); });
 });
