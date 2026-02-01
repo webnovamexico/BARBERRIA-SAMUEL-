@@ -3,251 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BARBERÍA SAMUEL - Real Men Only</title>
+    <title>BARBERÍA SAMUEL - Tlaquepaque</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;500;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles-samuel.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- ESTILOS GENERALES --- */
+        :root {
+            --dorado: #D4AF37;
+            --negro: #0a0a0a;
+            --gris: #1f1f1f;
+            --blanco: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Lato', sans-serif; background-color: var(--negro); color: var(--blanco); padding-bottom: 50px; }
+        
+        /* HEADER */
+        header { background: rgba(0,0,0,0.95); padding: 10px 0; border-bottom: 2px solid var(--dorado); position: fixed; width: 100%; z-index: 100; top: 0;}
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; text-align: center; }
+        
+        /* LOGO PEQUEÑO DEL MENÚ */
+        .logo-nav { 
+            height: 50px; width: 50px; border-radius: 50%; border: 2px solid var(--dorado); 
+            vertical-align: middle; margin-right: 10px; object-fit: cover;
+        }
+        .brand-name { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--dorado); vertical-align: middle; }
+
+        /* PORTADA (HERO) CON TUS FOTOS DE FONDO DE POSTIMAGES */
+        .hero { height: 85vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 70px; }
+        .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; animation: fadeHero 12s infinite; }
+        
+        /* AQUÍ PUSE TUS LINKS DE FONDO */
+        .hero-slide:nth-child(1) { background-image: url('https://i.postimg.cc/BbWPrXHr/Whats_App_Image_2026_01_31_at_7_50_43_PM.jpg'); animation-delay: 0s; }
+        .hero-slide:nth-child(2) { background-image: url('https://i.postimg.cc/yxF3ssyn/Whats_App_Image_2026_01_31_at_7_50_44_PM.jpg'); animation-delay: 4s; }
+        .hero-slide:nth-child(3) { background-image: url('https://i.postimg.cc/Kjn3xxD0/Whats_App_Image_2026_01_31_at_7_50_44_PM_(1).jpg'); animation-delay: 8s; }
+        
+        @keyframes fadeHero { 0% {opacity:0;} 10% {opacity:1;} 33% {opacity:1;} 43% {opacity:0;} 100% {opacity:0;} }
+        
+        .hero-overlay { position: absolute; background: rgba(0,0,0,0.7); width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        
+        /* Logo Grande en portada (Tu Calavera) */
+        .hero-logo-big { 
+            width: 140px; height: 140px; border-radius: 50%; border: 4px solid var(--dorado); 
+            margin-bottom: 20px; object-fit: cover; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        .hero h1 { font-family: 'Cinzel', serif; font-size: 2.2rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.1rem; line-height: 1.5; max-width: 800px; }
+        .btn-hero { background: var(--dorado); color: black; padding: 12px 30px; text-decoration: none; font-weight: bold; margin-top: 25px; display: inline-block; border-radius: 4px; font-size: 1rem; }
+
+        /* --- TARJETAS DE SERVICIO --- */
+        .seccion-titulo { text-align: center; font-family: 'Cinzel', serif; color: var(--dorado); margin: 60px 0 30px 0; font-size: 2rem; }
+        
+        .servicios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        .card { background: var(--gris); border: 1px solid #333; overflow: hidden; position: relative; }
+        .card-header { padding: 15px; background: black; border-bottom: 1px solid var(--dorado); display: flex; justify-content: space-between; align-items: center; }
+        .card-header h3 { font-family: 'Cinzel', serif; color: white; margin: 0; }
+        .card-icon { color: var(--dorado); font-size: 1.2rem; }
+
+        .card-slider { position: relative; height: 250px; width: 100%; overflow: hidden; }
+        .card-img { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out; 
+            filter: brightness(0.9); 
+        }
+        .card-img.active { opacity: 1; }
+
+        .card-body { padding: 20px; text-align: center; }
+        .card-body p { color: #ccc; font-size: 0.95rem; margin-bottom: 15px; }
+        .btn-select { display: inline-block; border: 1px solid var(--dorado); color: var(--dorado); padding: 5px 15px; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; border-radius: 4px; }
+        .btn-select:hover { background: var(--dorado); color: black; }
+
+        /* CITA */
+        .citas-area { max-width: 600px; margin: 60px auto; background: var(--gris); padding: 30px; border: 1px solid var(--dorado); }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; color: var(--dorado); margin-bottom: 5px; font-size: 0.9rem; }
+        input, select { width: 100%; padding: 12px; background: black; border: 1px solid #444; color: white; font-family: 'Lato', sans-serif; border-radius: 4px; }
+        .btn-submit { background: #25D366; color: white; width: 100%; padding: 15px; border: none; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 10px; border-radius: 4px; }
+        
+        .direccion-texto { text-align: center; margin-top: 20px; color: #ddd; font-size: 0.95rem; border-top: 1px solid #333; padding-top: 15px;}
+
+        footer { text-align: center; margin-top: 50px; color: #666; font-size: 0.8rem; padding: 20px; background: black; border-top: 1px solid #333; }
+        footer p { margin: 5px 0; }
+    </style>
 </head>
 <body>
 
     <header>
-        <nav class="navbar">
-            <div class="container">
-                <div class="logo">
-                    <i class="fas fa-skull"></i>
-                    <h1>SAMUEL BARBER</h1>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#inicio">BASE</a></li>
-                    <li><a href="#servicios">CORTES</a></li>
-                    <li><a href="#galeria">GALERÍA</a></li>
-                    <li><a href="#citas">RESERVAR</a></li>
-                    <li><a href="#contacto">UBICACIÓN</a></li>
-                </ul>
-                <div class="menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </div>
-        </nav>
+        <div class="container">
+            <img src="https://i.postimg.cc/d3MZbLrp/Whats_App_Image_2026_01_31_at_7_43_12_PM_(2).jpg" alt="Logo Calavera" class="logo-nav">
+            <span class="brand-name">SAMUEL BARBER</span>
+        </div>
     </header>
 
-    <section id="inicio" class="hero">
-        <div class="hero-slider">
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1600&fit=crop');"></div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1600&fit=crop');"></div>
-            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=1600&fit=crop');"></div>
-        </div>
-
+    <section class="hero">
+        <div class="hero-slide"></div>
+        <div class="hero-slide"></div>
+        <div class="hero-slide"></div>
         <div class="hero-overlay">
-            <div class="hero-content">
-                <h2 class="hero-title">BARBERÍA SAMUEL</h2>
-                <p class="hero-subtitle">ESTILO DURO. SIN RODEOS.</p>
-                <a href="#citas" class="btn-primary">AGENDAR AHORA</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="servicios" class="servicios">
-        <div class="container">
-            <h2 class="section-title">EL MENÚ</h2>
-            <p class="section-subtitle">ESCOGE TU ESTILO</p>
+            <img src="https://i.postimg.cc/d3MZbLrp/Whats_App_Image_2026_01_31_at_7_43_12_PM_(2).jpg" alt="Logo Grande" class="hero-logo-big">
+            <h1>ESTILO CLÁSICO</h1>
+            <p><i class="fas fa-map-marker-alt" style="color:var(--dorado);"></i> Av. Bahía de Todos Los Santos 2856</p>
+            <p style="font-size: 1rem; color: #ccc;">Parques de Santa María, Tlaquepaque</p>
             
-            <div class="servicios-grid">
-                <div class="servicio-card destacado">
-                    <div class="badge-popular">MÁS PEDIDO</div>
-                    <h3>CORTE ESCOLAR / LOW</h3>
-                    <p class="ejemplo-texto"><strong>Ejemplo:</strong> Casquete corto o desvanecido bajo. Limpio, formal, listo para la escuela o trabajo.</p>
-                </div>
-
-                <div class="servicio-card">
-                    <h3>SKIN FADE / NAVAJA</h3>
-                    <p class="ejemplo-texto"><strong>Ejemplo:</strong> Rapado desde piel (cero) con navaja/shaver. Mid Fade o High Fade agresivo.</p>
-                </div>
-
-                <div class="servicio-card">
-                    <h3>CLÁSICO / TIJERA</h3>
-                    <p class="ejemplo-texto"><strong>Ejemplo:</strong> Peinado hacia atrás, Pompadour o de lado. Puro corte a tijera con técnica clásica.</p>
-                </div>
-
-                <div class="servicio-card">
-                    <h3>BARBA & RITUAL</h3>
-                    <p class="ejemplo-texto"><strong>Ejemplo:</strong> Alineado perfecto con navaja, toalla caliente y rebajado de barba.</p>
-                </div>
-
-                <div class="servicio-card">
-                    <h3>COLOR & PLATINADO</h3>
-                    <p class="ejemplo-texto"><strong>Ejemplo:</strong> Decoloración para tonos plata, cenizos, blancos o rayos modernos.</p>
-                </div>
-
-                <div class="servicio-card">
-                    <h3>VIP COMPLETO</h3>
-                    <p class="ejemplo-texto"><strong>Ejemplo:</strong> Corte de pelo + Arreglo de Barba + Mascarilla exfoliante + Bebida.</p>
-                </div>
-            </div>
+            <a href="#citas" class="btn-hero">RESERVAR AHORA</a>
         </div>
     </section>
 
-    <section id="galeria" class="galeria">
-        <div class="container">
-            <h2 class="section-title">RESULTADOS</h2>
-            <p class="section-subtitle">FOTOS REALES</p>
-            
-            <div class="galeria-grid">
-                <div class="galeria-item">
-                    <img src="https://images.unsplash.com/photo-1622296089863-eb7fc530daa8?w=600&fit=crop" alt="Skin Fade">
-                    <div class="galeria-overlay"><h4>SKIN FADE</h4></div>
-                </div>
-                
-                <div class="galeria-item">
-                    <img src="https://images.unsplash.com/photo-1621607512022-6aecc4fed814?w=600&fit=crop" alt="Barba">
-                    <div class="galeria-overlay"><h4>BARBA</h4></div>
-                </div>
+    <h2 class="seccion-titulo">NUESTROS CORTES</h2>
 
-                <div class="galeria-item">
-                    <img src="https://images.unsplash.com/photo-1520338661084-680395057c93?w=600&fit=crop" alt="Tinte Platinado">
-                    <div class="galeria-overlay"><h4>COLOR</h4></div>
-                </div>
-
-                <div class="galeria-item">
-                    <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&fit=crop" alt="Corte Tijera">
-                    <div class="galeria-overlay"><h4>TIJERAS</h4></div>
-                </div>
-
-                <div class="galeria-item">
-                    <img src="https://images.unsplash.com/photo-1562004760-aceed7bb0fe3?w=600&fit=crop" alt="Estilo Urbano">
-                    <div class="galeria-overlay"><h4>URBANO</h4></div>
-                </div>
-
-                <div class="galeria-item">
-                    <img src="https://images.unsplash.com/photo-1504198458649-3128b932f49e?w=600&fit=crop" alt="La Silla">
-                    <div class="galeria-overlay"><h4>LA ZONA</h4></div>
-                </div>
+    <div class="servicios-grid">
+        
+        <div class="card">
+            <div class="card-header">
+                <h3>CLÁSICO</h3>
+                <i class="fas fa-cut card-icon"></i>
+            </div>
+            <div class="card-slider" id="slider-clasico">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnJmnfxoExi1yWX6I4YBUMS6UB-CwqohBilw&s" class="card-img active">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPivbIDf6rAYm3OqVOY5Wl0vShl-P3nBa6Ag&s" class="card-img">
+                <img src="https://i.pinimg.com/236x/dd/cc/19/ddcc1991833df7cdbbf88f87c5805406.jpg" class="card-img">
+            </div>
+            <div class="card-body">
+                <p>Corte tradicional a tijera y máquina. Elegancia atemporal.</p>
+                <span class="btn-select" onclick="seleccionarServicio('Corte Clásico')">ELEGIR ESTE</span>
             </div>
         </div>
-    </section>
 
-    <section id="citas" class="citas">
-        <div class="container">
-            <h2 class="section-title">RESERVA TU LUGAR</h2>
-            <p class="section-subtitle">CONFIRMA Y LLEGA PUNTUAL</p>
-            
-            <div class="cita-container">
-                <form id="citaForm" class="cita-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nombre">NOMBRE / APODO</label>
-                            <input type="text" id="nombre" name="nombre" required placeholder="TU NOMBRE">
-                        </div>
-                        <div class="form-group">
-                            <label for="telefono">CELULAR</label>
-                            <input type="tel" id="telefono" name="telefono" required placeholder="10 DÍGITOS">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="barbero">BARBERO</label>
-                            <select id="barbero" name="barbero" required>
-                                <option value="">SELECCIONA</option>
-                                <option value="Samuel">SAMUEL (MASTER)</option>
-                                <option value="Equipo">DISPONIBLE</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="servicio">SERVICIO</label>
-                            <select id="servicio" name="servicio" required>
-                                <option value="">ELIGE CORTE</option>
-                                <option value="Escolar / Low Fade">CORTE ESCOLAR</option>
-                                <option value="Skin Fade / Navaja">SKIN FADE (NAVAJA)</option>
-                                <option value="Taper Clásico">CLÁSICO / TIJERA</option>
-                                <option value="Barba Completa">BARBA COMPLETA</option>
-                                <option value="Platinado / Tinte">TINTE / PLATINADO</option>
-                                <option value="VIP Completo">FULL VIP</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="fecha">FECHA</label>
-                            <input type="date" id="fecha" name="fecha" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="hora">HORA</label>
-                            <select id="hora" name="hora" required disabled>
-                                <option value="">SELECCIONA FECHA</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="notas">NOTAS (OPCIONAL)</label>
-                        <textarea id="notas" name="notas" rows="2" placeholder="ALGO ESPECÍFICO..."></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-submit">
-                        CONFIRMAR CITA
-                    </button>
-                </form>
-
-                <div class="cita-info">
-                    <div class="info-card whatsapp-destacado">
-                        <i class="fab fa-whatsapp"></i>
-                        <h3>¿URGENCIA?</h3>
-                        <p>MÁNDANOS MENSAJE DIRECTO</p>
-                        <a href="https://wa.me/523317562312" class="btn-whatsapp" target="_blank">WHATSAPP</a>
-                    </div>
-                    <div class="info-card dark-card">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <h3>UBICACIÓN</h3>
-                        <p>AV. BAHÍA DE TODOS LOS SANTOS 2856</p>
-                        <p style="font-size: 0.85rem; opacity: 0.6;">PARQUES DE SANTA MARÍA, TLAQUEPAQUE</p>
-                    </div>
-                    <div class="info-card dark-card">
-                        <i class="fas fa-clock"></i>
-                        <h3>HORARIO</h3>
-                        <p>LUNES - SÁBADO</p>
-                        <p class="highlight-text">11:00 AM - 7:30 PM</p>
-                        <p style="color: #a33; font-weight:900;">DOMINGO: CERRADO</p>
-                    </div>
-                </div>
+        <div class="card">
+            <div class="card-header">
+                <h3>ESCOLAR</h3>
+                <i class="fas fa-user-graduate card-icon"></i>
+            </div>
+            <div class="card-slider" id="slider-escolar">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_63zwAKfVO0iBvjkhlaFIR6BFEYOHMptLlg&s" class="card-img active">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5n3kn4kb-Yge2IqBnmeKF9Z33uq7xrYsTbQ&s" class="card-img">
+                <img src="https://p19-common-sign.tiktokcdn-us.com/tos-maliva-p-0068/9b3d5f88951c48b3acc94a2863339e61_1724563413~tplv-tiktokx-origin.image?dr=9636&x-expires=1770037200&x-signature=vn17m7yukEoHG7t0TYGGWpI1XD0%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=55bbe6a9&idc=useast5" class="card-img">
+            </div>
+            <div class="card-body">
+                <p>Corte reglamentario, limpio y formal para estudiantes.</p>
+                <span class="btn-select" onclick="seleccionarServicio('Corte Escolar')">ELEGIR ESTE</span>
             </div>
         </div>
-    </section>
 
-    <section id="contacto" class="contacto">
-        <div class="container">
-            <div class="contacto-content">
-                <div class="logo-footer">
-                    <h2>BARBERÍA SAMUEL</h2>
-                </div>
-                <p class="slogan-footer">ESTILO URBANO. TLAQUEPAQUE.</p>
-                <div class="social-links">
-                    <a href="https://wa.me/523317562312" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
+        <div class="card">
+            <div class="card-header">
+                <h3>DESVANECIDOS</h3>
+                <i class="fas fa-layer-group card-icon"></i>
+            </div>
+            <div class="card-slider" id="slider-fade">
+                <img src="https://i.pinimg.com/474x/f5/37/b2/f537b26b18ce2734309607e3b7ae0cd7.jpg" class="card-img active">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0pCTBTKusIznFEHbQpbsg_RaJcHn59RL6AQ&s" class="card-img">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAsXPH6IOgKgXL0ofpt5lKmgJ4BqzztMc0cw&s" class="card-img">
+            </div>
+            <div class="card-body">
+                <p>Fades modernos (Low, Mid, High). Pulidos y detallados.</p>
+                <span class="btn-select" onclick="seleccionarServicio('Desvanecido / Fade')">ELEGIR ESTE</span>
             </div>
         </div>
-    </section>
 
-    <footer class="footer">
-        <div class="container">
-            <p>© 2024 BARBERÍA SAMUEL.</p>
+    </div>
+
+    <div id="citas"></div>
+    <div class="citas-area">
+        <h2 style="text-align: center; color: var(--dorado); margin-bottom: 20px;">AGENDA TU CITA</h2>
+        
+        <div class="input-group">
+            <label>NOMBRE COMPLETO</label>
+            <input type="text" id="nombre" placeholder="Escribe tu nombre">
         </div>
-    </footer>
 
-    <div id="modalConfirmacion" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <div class="modal-icon"><i class="fab fa-whatsapp"></i></div>
-            <h2>¡LISTO!</h2>
-            <p id="mensajeConfirmacion"></p>
-            <p class="modal-note">CONFIRMANDO EN WHATSAPP...</p>
+        <div class="input-group">
+            <label>TIPO DE CORTE</label>
+            <select id="servicio">
+                <option value="Corte Clásico">Corte Clásico</option>
+                <option value="Corte Escolar">Corte Escolar</option>
+                <option value="Desvanecido">Desvanecido / Fade</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>FECHA Y HORA PREFERIDA</label>
+            <input type="date" id="fecha" style="margin-bottom: 10px;">
+            <input type="time" id="hora">
+        </div>
+
+        <button class="btn-submit" onclick="enviarWhatsApp()">
+            <i class="fab fa-whatsapp"></i> CONFIRMAR CITA
+        </button>
+        
+        <div class="direccion-texto">
+            <p><i class="fas fa-map-pin" style="color:var(--dorado);"></i> <strong>UBICACIÓN:</strong></p>
+            <p>Av. Bahía de Todos Los Santos 2856</p>
+            <p>Parques de Santa María, 45609</p>
+            <p>San Pedro Tlaquepaque, Jal.</p>
+            <p style="margin-top: 10px; color: var(--dorado);">📞 33 1756 2312</p>
         </div>
     </div>
-    <div id="toast-container"></div>
 
-    <script src="script-samuel.js"></script>
+    <footer>
+        <p>BARBERÍA SAMUEL</p>
+        <p>Av. Bahía de Todos Los Santos 2856, Parques de Santa María, Tlaquepaque</p>
+        <p>© 2024 - Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        // SLIDERS AUTOMÁTICOS
+        function iniciarSliders() {
+            const sliders = ['slider-clasico', 'slider-escolar', 'slider-fade'];
+            sliders.forEach(id => {
+                let contenedor = document.getElementById(id);
+                if(contenedor) {
+                    let imagenes = contenedor.getElementsByClassName('card-img');
+                    let indice = 0;
+                    if(imagenes.length > 0) imagenes[0].classList.add('active');
+                    setInterval(() => {
+                        imagenes[indice].classList.remove('active');
+                        indice = (indice + 1) % imagenes.length;
+                        imagenes[indice].classList.add('active');
+                    }, 3000);
+                }
+            });
+        }
+
+        // SELECCIÓN Y WHATSAPP
+        function seleccionarServicio(nombreServicio) {
+            document.getElementById('servicio').value = nombreServicio;
+            document.getElementById('citas').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function enviarWhatsApp() {
+            let nombre = document.getElementById('nombre').value;
+            let servicio = document.getElementById('servicio').value;
+            let fecha = document.getElementById('fecha').value;
+            let hora = document.getElementById('hora').value;
+            let telefono = "523317562312"; 
+
+            if(!nombre || !fecha) {
+                alert("Por favor completa tu nombre y fecha.");
+                return;
+            }
+
+            let mensaje = `💈 *CITA SAMUEL BARBER* 💈%0A` +
+                          `👤 Cliente: ${nombre}%0A` +
+                          `✂️ Corte: ${servicio}%0A` +
+                          `📅 Fecha: ${fecha}%0A` +
+                          `⏰ Hora: ${hora}`;
+
+            window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
+        }
+
+        window.onload = iniciarSliders;
+    </script>
+
 </body>
 </html>
