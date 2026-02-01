@@ -11,6 +11,7 @@
         /* --- ESTILOS GENERALES --- */
         :root {
             --dorado: #D4AF37;
+            --dorado-brillante: #FFD700; /* Nuevo dorado más fuerte para el teléfono */
             --negro: #0a0a0a;
             --gris: #1f1f1f;
             --blanco: #ffffff;
@@ -22,18 +23,18 @@
         header { background: rgba(0,0,0,0.95); padding: 10px 0; border-bottom: 2px solid var(--dorado); position: fixed; width: 100%; z-index: 100; top: 0;}
         .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; text-align: center; }
         
-        /* LOGO PEQUEÑO DEL MENÚ */
+        /* LOGO PEQUEÑO DEL MENÚ (NUEVO) */
         .logo-nav { 
             height: 50px; width: 50px; border-radius: 50%; border: 2px solid var(--dorado); 
             vertical-align: middle; margin-right: 10px; object-fit: cover;
         }
         .brand-name { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--dorado); vertical-align: middle; }
 
-        /* PORTADA (HERO) CON TUS FOTOS DE FONDO DE POSTIMAGES */
+        /* PORTADA (HERO) */
         .hero { height: 85vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 70px; }
         .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; animation: fadeHero 12s infinite; }
         
-        /* AQUÍ PUSE TUS LINKS DE FONDO */
+        /* LINKS DE FONDO */
         .hero-slide:nth-child(1) { background-image: url('https://i.postimg.cc/BbWPrXHr/Whats_App_Image_2026_01_31_at_7_50_43_PM.jpg'); animation-delay: 0s; }
         .hero-slide:nth-child(2) { background-image: url('https://i.postimg.cc/yxF3ssyn/Whats_App_Image_2026_01_31_at_7_50_44_PM.jpg'); animation-delay: 4s; }
         .hero-slide:nth-child(3) { background-image: url('https://i.postimg.cc/Kjn3xxD0/Whats_App_Image_2026_01_31_at_7_50_44_PM_(1).jpg'); animation-delay: 8s; }
@@ -42,7 +43,7 @@
         
         .hero-overlay { position: absolute; background: rgba(0,0,0,0.7); width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
         
-        /* Logo Grande en portada (Tu Calavera) */
+        /* Logo Grande en portada (NUEVO) */
         .hero-logo-big { 
             width: 140px; height: 140px; border-radius: 50%; border: 4px solid var(--dorado); 
             margin-bottom: 20px; object-fit: cover; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
@@ -74,14 +75,37 @@
         .btn-select { display: inline-block; border: 1px solid var(--dorado); color: var(--dorado); padding: 5px 15px; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; border-radius: 4px; }
         .btn-select:hover { background: var(--dorado); color: black; }
 
-        /* CITA */
+        /* CITA Y CONTACTO */
         .citas-area { max-width: 600px; margin: 60px auto; background: var(--gris); padding: 30px; border: 1px solid var(--dorado); }
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; color: var(--dorado); margin-bottom: 5px; font-size: 0.9rem; }
         input, select { width: 100%; padding: 12px; background: black; border: 1px solid #444; color: white; font-family: 'Lato', sans-serif; border-radius: 4px; }
         .btn-submit { background: #25D366; color: white; width: 100%; padding: 15px; border: none; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 10px; border-radius: 4px; }
         
-        .direccion-texto { text-align: center; margin-top: 20px; color: #ddd; font-size: 0.95rem; border-top: 1px solid #333; padding-top: 15px;}
+        .direccion-texto { text-align: center; margin-top: 30px; color: #ddd; font-size: 0.95rem; border-top: 1px solid #333; padding-top: 20px;}
+        
+        /* ESTILO NUEVO PARA EL TELÉFONO LLAMATIVO */
+        .telefono-llamativo {
+            font-size: 1.8rem; /* Mucho más grande */
+            font-weight: 900; /* Muy grueso */
+            color: var(--dorado-brillante); /* Dorado brillante */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8); /* Sombra para resaltar */
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* ESTILO NUEVO PARA EL MAPA */
+        .mapa-container {
+            margin-top: 30px;
+            border: 2px solid var(--dorado);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+        .mapa-container iframe {
+            width: 100%;
+            height: 350px;
+            /* Truco visual para que el mapa se vea oscuro y combine con la página */
+            filter: invert(90%) hue-rotate(180deg) brightness(90%) contrast(90%);
+        }
 
         footer { text-align: center; margin-top: 50px; color: #666; font-size: 0.8rem; padding: 20px; background: black; border-top: 1px solid #333; }
         footer p { margin: 5px 0; }
@@ -91,7 +115,7 @@
 
     <header>
         <div class="container">
-            <img src="https://i.postimg.cc/d3MZbLrp/Whats_App_Image_2026_01_31_at_7_43_12_PM_(2).jpg" alt="Logo Calavera" class="logo-nav">
+            <img src="https://i.postimg.cc/4yDdph4h/Whats-App-Image-2026-02-01-at-4-21-09-PM.jpg" alt="Logo Samuel Barber" class="logo-nav">
             <span class="brand-name">SAMUEL BARBER</span>
         </div>
     </header>
@@ -101,7 +125,7 @@
         <div class="hero-slide"></div>
         <div class="hero-slide"></div>
         <div class="hero-overlay">
-            <img src="https://i.postimg.cc/d3MZbLrp/Whats_App_Image_2026_01_31_at_7_43_12_PM_(2).jpg" alt="Logo Grande" class="hero-logo-big">
+            <img src="https://i.postimg.cc/4yDdph4h/Whats-App-Image-2026-02-01-at-4-21-09-PM.jpg" alt="Logo Grande" class="hero-logo-big">
             <h1>ESTILO CLÁSICO</h1>
             <p><i class="fas fa-map-marker-alt" style="color:var(--dorado);"></i> Av. Bahía de Todos Los Santos 2856</p>
             <p style="font-size: 1rem; color: #ccc;">Parques de Santa María, Tlaquepaque</p>
@@ -195,15 +219,20 @@
         <div class="direccion-texto">
             <p><i class="fas fa-map-pin" style="color:var(--dorado);"></i> <strong>UBICACIÓN:</strong></p>
             <p>Av. Bahía de Todos Los Santos 2856</p>
-            <p>Parques de Santa María, 45609</p>
-            <p>San Pedro Tlaquepaque, Jal.</p>
-            <p style="margin-top: 10px; color: var(--dorado);">📞 33 1756 2312</p>
+            <p>Parques de Santa María, 45609, Tlaquepaque, Jal.</p>
+            
+            <div class="mapa-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3734.457022267763!2d-103.37849092475563!3d20.587246001991888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428ad0000000001%3A0x4000000000000000!2sAv.%20Bah%C3%ADa%20de%20Todos%20Los%20Santos%202856%2C%20Parques%20de%20Santa%20Mar%C3%ADa%2C%2045609%20San%20Pedro%20Tlaquepaque%2C%20Jal.!5e0!3m2!1sen!2smx!4v1700000000000!5m2!1sen!2smx" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <p style="margin-top: 25px; color: var(--dorado); font-size: 1.1rem;">📞 CITAS Y CONTACTO:</p>
+            <span class="telefono-llamativo">33 1756 2312</span>
         </div>
     </div>
 
     <footer>
         <p>BARBERÍA SAMUEL</p>
-        <p>Av. Bahía de Todos Los Santos 2856, Parques de Santa María, Tlaquepaque</p>
+        <p>Av. Bahía de Todos Los Santos 2856, Tlaquepaque</p>
         <p>© 2024 - Todos los derechos reservados</p>
     </footer>
 
